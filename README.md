@@ -3,7 +3,7 @@
 [![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 A small tool to create a linkage between your product's requirements, automated tests and their test results.
-
+![CTM Motivation](https://github.com/SAP/quality-continuous-traceability-monitor/wiki/assets/images/CTM_Motivation.jpg)
 
 ## Getting Started
 
