@@ -1,0 +1,32 @@
+[
+  {
+    "source_reference": "com.myCompany.myApp.myJavaTest",
+    "jira_keys": [
+      "MYJIRAPROJECT-3"
+    ]
+  },
+  {
+    "source_reference": "com.myCompany.myApp.myJavaTest.myMethod()",
+    "github_keys": [
+      "myOrg/mySourcecodeRepo#1"
+    ]
+  },
+  {
+    "source_reference": "com.myCompany.myApp.myJavaTest.myOtherMethod()",
+    "filelocation": {
+        "git": {
+          "organization": "myOrg",
+          "repository": "mySourcecodeRepo",
+          "branch": "master"
+        },
+        "relativePath": "./src/test/java/com/myCompany/myApp/myJavaTest.java"
+    },
+    "jira_keys": [
+      "MYJIRAPROJECT-1",
+      "MYJIRAPROJECT-2"
+    ],
+    "github_keys": [
+      "myOrg/mySourcecodeRepo#2"
+    ]
+  }
+]

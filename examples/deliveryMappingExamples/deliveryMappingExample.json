@@ -1,0 +1,11 @@
+{
+  "program": "My program name",
+  "delivery": "My delivery name/version",
+  "jira_keys": [
+    "MYJIRAPROJECT-3"
+  ],
+  "github_keys": [
+    "myOrg/mySourcecodeRepo#42",
+    "myOrg/mySourcecodeRepo#43"
+  ]
+}

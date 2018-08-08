@@ -1,0 +1,20 @@
+{
+  "github": {
+    "base_url": "https://github.my.corp"
+  },
+  "jira": {
+    "base_url": "https://jira.my.corp"
+  },
+  "workDir": "/tmp/ctm",
+  "outputDir": "/tmp/ctm",
+  "log": {
+    "level": "INFO"
+  },
+  "mapping": {
+    "local": "/tmp/ctm/mapping.json"
+  },
+  "testReport": [{
+    "type": "xunit-xml",
+    "local": "tmp/jobs/myApplication/workspace/target/surefire-reports"
+  }]
+}
