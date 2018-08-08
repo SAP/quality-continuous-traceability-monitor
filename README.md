@@ -15,7 +15,7 @@ go get github.com/SAP/quality-continuous-traceability-monitor
 
 ## Trace Automated Tests to Your Requirements
 
-Check our [Getting Started Tracing Requirements](https://github.wdf.sap.corp/CloudQualityCoaching/traceabilityEncabulator/wiki/Getting-Started-Tracing-Requirements) wiki page, to see how you can use the tool.
+Check our [Getting Started Guide](), to see how you can use CTM.
 
 ## Licensing
 
