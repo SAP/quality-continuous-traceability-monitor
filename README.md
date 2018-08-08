@@ -4,7 +4,6 @@
 
 A small tool to create a linkage between your product's requirements, automated tests and their test results.
 
-![CTM_Motivation](./docu/pictures/CTM_Motivation.jpg)
 
 ## Getting Started
 
