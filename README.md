@@ -12,9 +12,12 @@ If you want to use CTM right away, please ensure you have a working [go](https:/
 go get github.com/SAP/quality-continuous-traceability-monitor
 ```
 
+See our [Getting Started Guide](https://github.com/SAP/quality-continuous-traceability-monitor/wiki/Getting-Started), to learn how you can use CTM.
+
+
 ## Trace Automated Tests to Your Requirements
 
-Check our [Getting Started Guide](), to see how you can use CTM.
+Check our [CTM Guidebook](https://github.com/SAP/quality-continuous-traceability-monitor/wiki/CTM-Guidebook) to learn about the various options you could use CTM to improve your code quality.
 
 ## Licensing
 
