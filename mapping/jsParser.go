@@ -2,7 +2,7 @@ package mapping
 
 import (
 	"bufio"
-	"quality-continuous-traceability-monitor/utils"
+	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"io"
 	"os"
 	"path/filepath"

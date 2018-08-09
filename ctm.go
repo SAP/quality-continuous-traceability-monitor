@@ -1,10 +1,10 @@
 package main
 
 import (
-	"quality-continuous-traceability-monitor/mapping"
-	"quality-continuous-traceability-monitor/projectmanagement"
-	"quality-continuous-traceability-monitor/testreport"
-	"quality-continuous-traceability-monitor/utils"
+	"github.com/SAP/quality-continuous-traceability-monitor/mapping"
+	"github.com/SAP/quality-continuous-traceability-monitor/projectmanagement"
+	"github.com/SAP/quality-continuous-traceability-monitor/testreport"
+	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"flag"
 	"os"
 	"sort"

@@ -1,7 +1,7 @@
 package mapping
 
 import (
-	"quality-continuous-traceability-monitor/utils"
+	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"strconv"
 	"strings"
 	"testing"

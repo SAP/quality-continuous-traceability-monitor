@@ -2,8 +2,8 @@ package projectmanagement
 
 import (
 	"bytes"
-	"quality-continuous-traceability-monitor/mapping"
-	"quality-continuous-traceability-monitor/utils"
+	"github.com/SAP/quality-continuous-traceability-monitor/mapping"
+	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"io/ioutil"
 	"net/http"
 	"os"
