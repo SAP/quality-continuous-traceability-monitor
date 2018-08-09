@@ -1,7 +1,7 @@
 package mapping
 
 import (
-	"ctm/utils"
+	"quality-continuous-traceability-monitor/utils"
 	"encoding/json"
 	"io/ioutil"
 	"strings"

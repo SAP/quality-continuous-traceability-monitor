@@ -1,9 +1,9 @@
 package projectmanagement
 
 import (
-	"ctm/mapping"
-	"ctm/testreport"
-	"ctm/utils"
+	"quality-continuous-traceability-monitor/mapping"
+	"quality-continuous-traceability-monitor/testreport"
+	"quality-continuous-traceability-monitor/utils"
 	"fmt"
 	"io"
 	"os"

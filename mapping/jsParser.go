@@ -2,7 +2,7 @@ package mapping
 
 import (
 	"bufio"
-	"ctm/utils"
+	"quality-continuous-traceability-monitor/utils"
 	"io"
 	"os"
 	"path/filepath"

@@ -1,7 +1,7 @@
 package testreport
 
 import (
-	"ctm/utils"
+	"quality-continuous-traceability-monitor/utils"
 	"encoding/xml"
 	"io/ioutil"
 	"os"

@@ -2,8 +2,8 @@ package projectmanagement
 
 import (
 	"bytes"
-	"ctm/mapping"
-	"ctm/utils"
+	"quality-continuous-traceability-monitor/mapping"
+	"quality-continuous-traceability-monitor/utils"
 	"io/ioutil"
 	"net/http"
 	"os"

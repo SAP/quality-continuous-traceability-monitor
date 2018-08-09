@@ -1,10 +1,10 @@
 package main
 
 import (
-	"ctm/mapping"
-	"ctm/projectmanagement"
-	"ctm/testreport"
-	"ctm/utils"
+	"quality-continuous-traceability-monitor/mapping"
+	"quality-continuous-traceability-monitor/projectmanagement"
+	"quality-continuous-traceability-monitor/testreport"
+	"quality-continuous-traceability-monitor/utils"
 	"flag"
 	"os"
 	"sort"
