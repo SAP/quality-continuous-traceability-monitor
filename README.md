@@ -8,8 +8,9 @@ Test results often miss a link to the project's requirements so that it's cumber
 Adding CTM to e.g. your Continuous Delivery pipeline will give the complete team an always up to date view on the quality status of your project's requirements!  
 
 #### How?
-CTM creates a linkage between your product's requirements, its automated tests and their test results.
-The generated reports could help you e.g. provide traceability in respect to the ISO9001 requirement "Identification and traceability". Further more you may use CTM to store a continuous trace of your automated test metrics per product requirement. This will grant you a constant insight on your product quality from a requirements point of view. 
+CTM creates a linkage between your product's requirements, its automated tests and their test results.  
+The generated reports may help you e.g. provide traceability in respect to the ISO9001 requirement "Identification and traceability".  
+Further more you may use CTM to store a continuous trace of your automated test results per product requirement in a so called [traceability repository](https://github.com/SAP/quality-continuous-traceability-monitor/wiki/CTM-Guidebook#9-traceability-repository). This will grant you a constant insight on your product quality from a requirements point of view. 
 
 ![CTM Motivation](https://github.com/SAP/quality-continuous-traceability-monitor/wiki/assets/images/CTM_Motivation.jpg)
 
