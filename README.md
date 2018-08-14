@@ -2,6 +2,12 @@
 
 [![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
+#### Why?
+CTM allows you to continuously monitor the health of your product's requirements.
+Test results often miss a link to the project's requirements so that it's cumbersome to understand which requirement is affected by a broken test.  
+Adding CTM to e.g. your Continuous Delivery pipeline will give the complete team an always up to date view on the quality status of your project's requirements!  
+
+#### How?
 CTM creates a linkage between your product's requirements, its automated tests and their test results.
 The generated reports could help you e.g. provide traceability in respect to the ISO9001 requirement "Identification and traceability". Further more you may use CTM to store a continuous trace of your automated test metrics per product requirement. This will grant you a constant insight on your product quality from a requirements point of view. 
 
