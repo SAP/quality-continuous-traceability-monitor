@@ -2,12 +2,13 @@ package mapping
 
 import (
 	"bufio"
-	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"io"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 
 	"github.com/golang/glog"
 )
@@ -80,7 +81,7 @@ func parseJava(coding io.Reader, cfg utils.Config, sc utils.Sourcecode, file *os
 			continue
 		}
 
-		// Is this a test method marker?
+		// Is this a test method annotation?
 		if strings.Contains(line, "@Test") {
 			tm = true
 			continue
@@ -150,8 +151,8 @@ func parseJava(coding io.Reader, cfg utils.Config, sc utils.Sourcecode, file *os
 		// Check whether the line contains a test method
 		// We're inside a class --> (len(cn) > 0)
 		// and we've recently found a traceability annotation --> (m_bli != nil || c_bli != nil)
-		// and we found a @Test annotation --> (tm)
-		if len(cn) > 0 && (mBli != nil || cBli != nil) && tm {
+		// Testing on test annotation (tm) will be done later, as JUnit tests could also be indicated by method name starting with 'test...'
+		if len(cn) > 0 && (mBli != nil || cBli != nil) {
 			me := strings.LastIndex(line, "{") // Might also be an enum or something else inside a class
 			if me != -1 {
 				mne := strings.Index(line, "(") // Start of method parameters is end of method name
@@ -161,23 +162,33 @@ func parseJava(coding io.Reader, cfg utils.Config, sc utils.Sourcecode, file *os
 					mns := strings.LastIndex(mnes, " ") // This must be where the method name starts
 					m := mnes[mns+1:]
 
-					// Create and append test backlog item (for this method)
-					t := &Test{getSourcecodeURL(cfg, sc, file), cn, m}
-					var tbi TestBacklog
-					if cBli != nil {
-						tbi = TestBacklog{*t, cBli}
-						tb = append(tb, tbi)
-					}
-					if mBli != nil {
-						tbi = TestBacklog{*t, mBli}
-						tb = append(tb, tbi)
+					// We didn't find a test annotation (@Test) yet. Check if method starts with test
+					if tm == false && strings.HasPrefix(m, "test") {
+						tm = true
 					}
 
-					// We handled this traceability relevant test method. Reset traceability method annotation
-					mBli = nil
+					if tm {
 
-					// We handled this test method. Reset @Test annotation marker
-					tm = false
+						// Create and append test backlog item (for this method)
+						t := &Test{getSourcecodeURL(cfg, sc, file), cn, m}
+						var tbi TestBacklog
+						if cBli != nil {
+							tbi = TestBacklog{*t, cBli}
+							tb = append(tb, tbi)
+						}
+						if mBli != nil {
+							tbi = TestBacklog{*t, mBli}
+							tb = append(tb, tbi)
+						}
+
+						// We handled this traceability relevant test method. Reset traceability method annotation
+						mBli = nil
+
+						// We handled this test method. Reset @Test annotation marker
+						tm = false
+
+					}
+
 				}
 			}
 		}

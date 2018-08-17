@@ -1,11 +1,12 @@
 package mapping
 
 import (
-	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"os"
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 )
 
 // TestBacklog mappings (correct)
@@ -115,6 +116,48 @@ var testJavaCode = []testMapping{
 		expectedResult: []TestBacklog{{Test: Test{ClassName: "SomeTestClass", FileURL: "testFile.java", Method: "myTestMethod"},
 			BacklogItem: []BacklogItem{
 				BacklogItem{ID: "CLOUDECOSYSTEM-6381", Source: Jira}}}}},
+	testMapping{input: `	
+				package com.mycorp;
+
+				import junit.framework.Test;
+				import junit.framework.TestCase;
+				import junit.framework.TestSuite;
+				
+				/**
+				* Unit test for simple App.
+				*/
+				public class AppTest extends TestCase {
+				
+					/** 
+					* Create the test case
+					*
+					* @param testName name of the test case
+					*/
+					public AppTest(String testName) {
+						super(testName);
+					}   
+				
+					/** 
+					* @return the suite of tests being tested
+					*/
+					public static Test suite() {
+						return new TestSuite(AppTest.class);
+					}   
+				
+					/** 
+					* Overwhelming complex test, which covers my
+					* product requirement #1
+					*/
+					// Trace(GitHub:doergn/sourcecodeRepo#1)
+					public void testApp() {
+						assertTrue(true);
+					}   
+				
+				}	
+			`,
+		expectedResult: []TestBacklog{{Test: Test{ClassName: "com.mycorp.AppTest", FileURL: "testFile.java", Method: "testApp"},
+			BacklogItem: []BacklogItem{
+				BacklogItem{ID: "doergn/sourcecodeRepo#1", Source: Github}}}}},
 	testMapping{input: `
 		package com.sap.ctm.testing;
 
