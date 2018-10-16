@@ -15,7 +15,7 @@ are interested in this tool.
 Use the [issue tracker](https://github.com/SAP/quality-continuous-traceability-monitor/issues) to find ways to contribute. 
 Find a bug or a feature, mentioned in the issue that you will take care of.
 
-Technically, you should fork this repository, make changes in your own fork, and then submit a pull-request. 
+Technically, you fork this repository, make changes in your own fork, and then submit a pull-request. 
 All new code should have been thoroughly tested end-to-end in order to validate implemented features and the presence
 or lack of defects.
 
