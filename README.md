@@ -16,7 +16,7 @@ Further more you may use CTM to store a continuous trace of your automated test 
 
 ## Requirements
 
-If you want to use CTM right away, please ensure you have a working [go](https://golang.org/doc/install).  
+If you want to use CTM right away, please ensure you have a working [latest version of go installed](https://golang.org/doc/install).  
 
 To trace your product's requirements, they have to be maintained in either 
   * [Atlassian JIRA](https://www.atlassian.com/software/jira) 
