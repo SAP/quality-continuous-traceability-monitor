@@ -26,7 +26,7 @@ or lack of defects.
 before beginning to work on a new pull-request.
 
 ### Tests
-All coding **must** come with automated unit tests.
+All coding **must** come with automated [go unit tests](https://blog.alexellis.io/golang-writing-unit-tests/).
 
 ### Documentation
 New or changed functionality needs to be documented, so it can be properly used.
