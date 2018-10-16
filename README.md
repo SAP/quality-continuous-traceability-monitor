@@ -24,7 +24,7 @@ To trace your product's requirements, they have to be maintained in either
   * [Enterprise GitHub](https://enterprise.github.com/home)
   
 Your automated test results (e.g. provided by your test runner) must be available in
-  * [xunit XML](https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd)
+   * xunit XML (see [XSD Schema](https://github.com/apache/maven-surefire/blob/master/maven-surefire-plugin/src/site/resources/xsd/surefire-test-report.xsd))
 
 ## Installation
 
