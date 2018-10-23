@@ -57,7 +57,7 @@ jobs:
           destination: raw-test-output
 
       - store_artifacts:
-          path: /go/bin
+          path: ./workdir
           destination: artifacts
 
       - store_test_results:
