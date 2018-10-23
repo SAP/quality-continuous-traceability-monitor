@@ -24,6 +24,7 @@ jobs:
           paths:
             - /go/src/github.com/SAP/quality-continuous-traceability-monitor/vendor
 
+      # Install dependencies
       - run: 
           name: Install dependencies
           command: |
@@ -37,6 +38,7 @@ jobs:
           paths:
             - /go/src/github.com/SAP/quality-continuous-traceability-monitor/vendor
 
+      # Get JUnit XML formater
       - run: go get github.com/jstemmer/go-junit-report
 
       - run:
@@ -45,13 +47,15 @@ jobs:
             trap "go-junit-report <${TEST_RESULTS}/go-test.out > ${TEST_RESULTS}/go-test-report.xml" EXIT
             make test | tee ${TEST_RESULTS}/go-test.out
 
-      - run: make
+      - run: make build-linux
+      - run: make build-windows
 
       - save_cache:
           key: v1-pkg-cache
           paths:
             - "/go/pkg"            
 
+      # Store artifacts and test results
       - store_artifacts:
           path: /tmp/test-results
           destination: raw-test-output
