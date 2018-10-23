@@ -1,20 +1,23 @@
 package main
 
 import (
-	"github.com/SAP/quality-continuous-traceability-monitor/mapping"
-	"github.com/SAP/quality-continuous-traceability-monitor/projectmanagement"
-	"github.com/SAP/quality-continuous-traceability-monitor/testreport"
-	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"flag"
+	"fmt"
 	"os"
 	"sort"
 	"strings"
 	"time"
 
+	"github.com/SAP/quality-continuous-traceability-monitor/mapping"
+	"github.com/SAP/quality-continuous-traceability-monitor/projectmanagement"
+	"github.com/SAP/quality-continuous-traceability-monitor/testreport"
+	"github.com/SAP/quality-continuous-traceability-monitor/utils"
+
 	"github.com/golang/glog"
 )
 
 const reportBaseName = "ctm_report"
+const ctmVersion = "1.0.0"
 
 // Supported test result formats
 // xunit-xml format = https://github.com/windyroad/JUnit-Schema/blob/master/JUnit.xsd
@@ -151,9 +154,18 @@ func main() {
 	argCommandLineProgram := flag.String("sp", "", "Delivery program")
 	argSelectiveBacklogItems := flag.String("bi", "", "Comma separated list of delivery relevtn backlog items")
 	argDeliveryFile := flag.String("df", "", "Delivery file")
+	argVersion := flag.Bool("version", false, "CTM Version")
 
 	// Get commandline arguments and read config
 	flag.Parse()
+
+	// Check whether we're only called to print version
+	if *argVersion {
+		fmt.Println(ctmVersion)
+		os.Exit(0)
+	}
+
+	// Read config
 	cfg := utils.Config{}
 	cfg.ReadConfig(argConfigFile)
 
