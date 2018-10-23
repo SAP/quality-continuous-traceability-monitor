@@ -56,8 +56,8 @@ jobs:
           path: /tmp/test-results
           destination: raw-test-output
 
-      - store artifacts:
-          path: /go/bin/
+      - store_artifacts:
+          path: /go/bin
           destination: artifacts
 
       - store_test_results:
