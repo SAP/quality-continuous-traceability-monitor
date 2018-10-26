@@ -1,6 +1,6 @@
 # Continuous Traceability Monitor (CTM) 
 
-[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![CircleCI](https://circleci.com/gh/SAP/quality-continuous-traceability-monitor/tree/master.svg?style=svg)](https://circleci.com/gh/SAP/quality-continuous-traceability-monitor/tree/master)
 
 #### Why?
 CTM allows you to continuously monitor the health of your product's requirements.
