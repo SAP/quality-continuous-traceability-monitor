@@ -16,8 +16,6 @@ Further more you may use CTM to store a continuous trace of your automated test 
 
 ## Requirements
 
-If you want to use CTM right away, please ensure you have a working [latest version of go installed](https://golang.org/doc/install).  
-
 To trace your product's requirements, they have to be maintained in either 
   * [Atlassian JIRA](https://www.atlassian.com/software/jira) 
   * [GitHub](https://github.com/)
@@ -27,6 +25,14 @@ Your automated test results (e.g. provided by your test runner) must be availabl
    * xunit XML (see [XSD Schema](https://github.com/apache/maven-surefire/blob/master/maven-surefire-plugin/src/site/resources/xsd/surefire-test-report.xsd))
 
 ## Installation
+
+#### Stable release
+
+Download the latest released version (Linux or Windows) on our [release page](https://github.com/SAP/quality-continuous-traceability-monitor/releases).
+
+#### Development version
+
+If you want to use the latest development version, please ensure you have a working [latest version of go installed](https://golang.org/doc/install). Using the latest development version comes with no guarantee that CTM will work.
 
 Get the latest version of CTM via `go get`
 ```
