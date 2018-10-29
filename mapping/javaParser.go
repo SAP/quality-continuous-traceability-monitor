@@ -2,15 +2,13 @@ package mapping
 
 import (
 	"bufio"
+	"github.com/SAP/quality-continuous-traceability-monitor/utils"
+	"github.com/golang/glog"
 	"io"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
-
-	"github.com/SAP/quality-continuous-traceability-monitor/utils"
-
-	"github.com/golang/glog"
 )
 
 // JavaParser implements the mapping.Parser interface for Java sourcecode
@@ -120,12 +118,12 @@ func parseJava(coding io.Reader, cfg utils.Config, sc utils.Sourcecode, file *os
 			if ls != "" {
 				continue
 			}
-			cn = line[ce+5 : len(line)]
+			cn = line[ce+5:]
 			// As cn could now still hold interface and parent class definitions we have
 			// to slice it a bit more
 			cn = strings.TrimLeft(cn, " ")
 			cne := strings.Index(cn, " ")
-			if cne == -1 { // After the classname there was a space char. (could be omited e.g. line end)
+			if cne == -1 { // After the classname there was a space char. (could be omitted e.g. line end)
 				cne = strings.Index(cn, "\n")
 			}
 			if ce == -1 {

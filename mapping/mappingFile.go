@@ -1,13 +1,12 @@
 package mapping
 
 import (
-	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"encoding/json"
+	"github.com/SAP/quality-continuous-traceability-monitor/utils"
+	"github.com/golang/glog"
 	"io/ioutil"
 	"strings"
 	"time"
-
-	"github.com/golang/glog"
 )
 
 // JSONMappingFile is a parser for JSON mapping file (which map Backlog items to automated test classes). Pls. note, that this class does NOT implement the mapping.Parser interface

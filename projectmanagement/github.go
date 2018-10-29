@@ -1,10 +1,13 @@
-package projectmanagement   
+package projectmanagement
 
 import (
 	"context"
 	"github.com/SAP/quality-continuous-traceability-monitor/mapping"
 	"github.com/SAP/quality-continuous-traceability-monitor/testreport"
 	"github.com/SAP/quality-continuous-traceability-monitor/utils"
+	"github.com/golang/glog"
+	"github.com/google/go-github/github"
+	"golang.org/x/oauth2"
 	"io/ioutil"
 	"net/url"
 	"os"
@@ -12,10 +15,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/golang/glog"
-	"github.com/google/go-github/github"
-	"golang.org/x/oauth2"
 )
 
 // gitHubEnterpriseAPIPath contains the GitHub API path for the GitHub Enterprise version

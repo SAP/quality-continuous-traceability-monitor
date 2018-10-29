@@ -1,17 +1,16 @@
 package mapping
 
 import (
+	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"os"
 	"strconv"
 	"strings"
 	"testing"
-
-	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 )
 
 // TestBacklog mappings (correct)
 var testJavaCode = []testMapping{
-	testMapping{input: `
+	{input: `
 		package com.sap.ctm.testing;
 
 		import org.junit.*;
@@ -27,8 +26,8 @@ var testJavaCode = []testMapping{
 		}
 	`,
 		expectedResult: []TestBacklog{{Test: Test{ClassName: "com.sap.ctm.testing.MyTest", FileURL: "testFile.java", Method: "someTest"},
-			BacklogItem: []BacklogItem{BacklogItem{ID: "MYJIRAPROJECT-3", Source: Jira}}}}},
-	testMapping{input: `
+			BacklogItem: []BacklogItem{{ID: "MYJIRAPROJECT-3", Source: Jira}}}}},
+	{input: `
 		package com.sap.ctm.testing;
 
 		import org.junit.*;
@@ -44,8 +43,8 @@ var testJavaCode = []testMapping{
 		}
 	`,
 		expectedResult: []TestBacklog{{Test: Test{ClassName: "com.sap.ctm.testing.MyTest", FileURL: "testFile.java", Method: "someTest"},
-			BacklogItem: []BacklogItem{BacklogItem{ID: "MYJIRAPROJECT-3", Source: Jira}}}}},
-	testMapping{input: `
+			BacklogItem: []BacklogItem{{ID: "MYJIRAPROJECT-3", Source: Jira}}}}},
+	{input: `
 		package com.sap.ctm.testing;
 
 		import org.junit.*;
@@ -61,8 +60,8 @@ var testJavaCode = []testMapping{
 		}
 	`,
 		expectedResult: []TestBacklog{{Test: Test{ClassName: "com.sap.ctm.testing.MyTest", FileURL: "testFile.java", Method: "someTest"},
-			BacklogItem: []BacklogItem{BacklogItem{ID: "MYJIRAPROJECT-2", Source: Jira}}}}},
-	testMapping{input: `
+			BacklogItem: []BacklogItem{{ID: "MYJIRAPROJECT-2", Source: Jira}}}}},
+	{input: `
 		package com.sap.ctm.testing;
 
 		import org.junit.*;
@@ -79,9 +78,9 @@ var testJavaCode = []testMapping{
 	`,
 		expectedResult: []TestBacklog{{Test: Test{ClassName: "com.sap.ctm.testing.MyTest", FileURL: "testFile.java", Method: "someTest"},
 			BacklogItem: []BacklogItem{
-				BacklogItem{ID: "MYJIRAPROJECT-1", Source: Jira},
-				BacklogItem{ID: "myOrg/myRepo#42", Source: Github}}}}},
-	testMapping{input: `
+				{ID: "MYJIRAPROJECT-1", Source: Jira},
+				{ID: "myOrg/myRepo#42", Source: Github}}}}},
+	{input: `
 			package com.sap.ctm.testing;
 	
 			import org.junit.*;
@@ -99,10 +98,10 @@ var testJavaCode = []testMapping{
 		`,
 		expectedResult: []TestBacklog{{Test: Test{ClassName: "com.sap.ctm.testing.SomeTestClass", FileURL: "testFile.java", Method: "myTestMethod"},
 			BacklogItem: []BacklogItem{
-				BacklogItem{ID: "MYJIRAPROJECT-12", Source: Jira},
-				BacklogItem{ID: "myOrg/myRepo#52", Source: Github},
-				BacklogItem{ID: "myOrg/myRepo#62", Source: Github}}}}},
-	testMapping{input: `	
+				{ID: "MYJIRAPROJECT-12", Source: Jira},
+				{ID: "myOrg/myRepo#52", Source: Github},
+				{ID: "myOrg/myRepo#62", Source: Github}}}}},
+	{input: `	
 				import org.junit.Test;
 		
 				public class SomeTestClass
@@ -115,8 +114,8 @@ var testJavaCode = []testMapping{
 			`,
 		expectedResult: []TestBacklog{{Test: Test{ClassName: "SomeTestClass", FileURL: "testFile.java", Method: "myTestMethod"},
 			BacklogItem: []BacklogItem{
-				BacklogItem{ID: "CLOUDECOSYSTEM-6381", Source: Jira}}}}},
-	testMapping{input: `	
+				{ID: "CLOUDECOSYSTEM-6381", Source: Jira}}}}},
+	{input: `	
 				package com.mycorp;
 
 				import junit.framework.Test;
@@ -157,8 +156,8 @@ var testJavaCode = []testMapping{
 			`,
 		expectedResult: []TestBacklog{{Test: Test{ClassName: "com.mycorp.AppTest", FileURL: "testFile.java", Method: "testApp"},
 			BacklogItem: []BacklogItem{
-				BacklogItem{ID: "doergn/sourcecodeRepo#1", Source: Github}}}}},
-	testMapping{input: `
+				{ID: "doergn/sourcecodeRepo#1", Source: Github}}}}},
+	{input: `
 		package com.sap.ctm.testing;
 
 		import org.junit.*;
@@ -189,12 +188,12 @@ var testJavaCode = []testMapping{
 		expectedResult: []TestBacklog{{
 			Test: Test{ClassName: "com.sap.ctm.testing.SomeTestClass", FileURL: "testFile.java", Method: "myTestMethod"},
 			BacklogItem: []BacklogItem{
-				BacklogItem{ID: "MYJIRAPROJECT-12", Source: Jira},
-				BacklogItem{ID: "myOrg/myRepo#52", Source: Github},
-				BacklogItem{ID: "myOrg/myRepo#62", Source: Github}}},
+				{ID: "MYJIRAPROJECT-12", Source: Jira},
+				{ID: "myOrg/myRepo#52", Source: Github},
+				{ID: "myOrg/myRepo#62", Source: Github}}},
 			{Test: Test{ClassName: "com.sap.ctm.testing.SomeTestClass", FileURL: "testFile.java", Method: "anotherTestMethod"},
 				BacklogItem: []BacklogItem{
-					BacklogItem{ID: "MYJIRAPROJECT-100", Source: Jira}}}}}}
+					{ID: "MYJIRAPROJECT-100", Source: Jira}}}}}}
 
 func TestJavaParsing(t *testing.T) {
 

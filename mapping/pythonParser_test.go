@@ -11,7 +11,7 @@ import (
 // TestBacklog mappings (correct)
 // Ensure the a least one space char before the word "class"
 var testPythonCode = []testMapping{
-	testMapping{input: `
+	{input: `
 	import unittest
 
 	 # Trace(Jira:MYPROJECT-1)
@@ -34,15 +34,15 @@ var testPythonCode = []testMapping{
 	`,
 		expectedResult: []TestBacklog{{
 			Test:        Test{ClassName: "testFile.TestStringMethods", FileURL: "/tmp/test/testFile.py", Method: "test_upper"},
-			BacklogItem: []BacklogItem{BacklogItem{ID: "MYPROJECT-1", Source: Jira}}},
+			BacklogItem: []BacklogItem{{ID: "MYPROJECT-1", Source: Jira}}},
 			{Test: Test{ClassName: "testFile.TestStringMethods", FileURL: "/tmp/test/testFile.py", Method: "test_isupper"},
-				BacklogItem: []BacklogItem{BacklogItem{ID: "myorg/myRepo#1", Source: Github}}},
+				BacklogItem: []BacklogItem{{ID: "myorg/myRepo#1", Source: Github}}},
 			{Test: Test{ClassName: "testFile.TestStringMethods", FileURL: "/tmp/test/testFile.py", Method: "test_isupper"},
-				BacklogItem: []BacklogItem{BacklogItem{ID: "MYPROJECT-1", Source: Jira}}},
+				BacklogItem: []BacklogItem{{ID: "MYPROJECT-1", Source: Jira}}},
 			{Test: Test{ClassName: "testFile.TestStringMethods", FileURL: "/tmp/test/testFile.py", Method: "test_split"},
-				BacklogItem: []BacklogItem{BacklogItem{ID: "MYPROJECT-1", Source: Jira}}},
+				BacklogItem: []BacklogItem{{ID: "MYPROJECT-1", Source: Jira}}},
 		}},
-	testMapping{input: `
+	{input: `
 	import unittest
 
 	 # Trace(Jira:MYPROJECT-1, GitHub:myOrg/myRepo#2)
@@ -57,13 +57,13 @@ var testPythonCode = []testMapping{
 	`,
 		expectedResult: []TestBacklog{{Test: Test{ClassName: "testFile.TestStringMethods", FileURL: "/tmp/test/testFile.py", Method: "test_upper"},
 			BacklogItem: []BacklogItem{
-				BacklogItem{ID: "MYPROJECT-1", Source: Jira},
-				BacklogItem{ID: "myOrg/myRepo#2", Source: Github},
+				{ID: "MYPROJECT-1", Source: Jira},
+				{ID: "myOrg/myRepo#2", Source: Github},
 			}},
 			{Test: Test{ClassName: "testFile.TestStringMethods", FileURL: "/tmp/test/testFile.py", Method: "test_isupper"},
 				BacklogItem: []BacklogItem{
-					BacklogItem{ID: "MYPROJECT-1", Source: Jira},
-					BacklogItem{ID: "myOrg/myRepo#2", Source: Github},
+					{ID: "MYPROJECT-1", Source: Jira},
+					{ID: "myOrg/myRepo#2", Source: Github},
 				}},
 		}}}
 

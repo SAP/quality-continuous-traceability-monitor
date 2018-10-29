@@ -54,7 +54,7 @@ func CreateLinkInJiraBackLogItem(cfg utils.Config, traces []Trace) {
 				}
 				var jiraURL = cfg.Jira.BaseURL + jiraAPIPath + trace.BacklogItem.ID + "/comment"
 
-				req, err := http.NewRequest(http.MethodPost, jiraURL, bytes.NewBuffer(jsonBody))
+				req, _ := http.NewRequest(http.MethodPost, jiraURL, bytes.NewBuffer(jsonBody))
 				req.Header.Set("Content-Type", "application/json")
 				req.SetBasicAuth(cfg.Jira.BasicAuth.User, cfg.Jira.BasicAuth.Password)
 

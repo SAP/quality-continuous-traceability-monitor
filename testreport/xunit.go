@@ -1,8 +1,8 @@
 package testreport
 
 import (
-	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"encoding/xml"
+	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"io/ioutil"
 	"os"
 	"path/filepath"

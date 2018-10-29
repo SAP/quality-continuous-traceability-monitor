@@ -14,15 +14,15 @@ type testMapping struct {
 
 // TestBacklog mappings (correct)
 var testJSONMappings = []testMapping{
-	testMapping{input: `[
+	{input: `[
 		{
 			"source_reference": "com.myCompany.myApp.myJavaTest",
 			"jira_keys": ["MYJIRAPROJECT-3"]
 		}
 	]`,
 		expectedResult: []TestBacklog{{Test: Test{ClassName: "com.myCompany.myApp.myJavaTest", FileURL: "", Method: ""},
-			BacklogItem: []BacklogItem{BacklogItem{ID: "MYJIRAPROJECT-3", Source: Jira}}}}},
-	testMapping{input: `[
+			BacklogItem: []BacklogItem{{ID: "MYJIRAPROJECT-3", Source: Jira}}}}},
+	{input: `[
 		{
 			"source_reference": "com.myCompany.myApp.myJavaTest",
 			"jira_keys": [
@@ -56,14 +56,14 @@ var testJSONMappings = []testMapping{
 	]`,
 		expectedResult: []TestBacklog{
 			{Test: Test{ClassName: "com.myCompany.myApp.myJavaTest", FileURL: "", Method: ""},
-				BacklogItem: []BacklogItem{BacklogItem{ID: "MYJIRAPROJECT-1", Source: Jira}}},
+				BacklogItem: []BacklogItem{{ID: "MYJIRAPROJECT-1", Source: Jira}}},
 			{Test: Test{ClassName: "com.myCompany.myApp.myJavaTest", FileURL: "", Method: "myMethod"},
-				BacklogItem: []BacklogItem{BacklogItem{ID: "myOrg/mySourcecodeRepo#1", Source: Github}}},
+				BacklogItem: []BacklogItem{{ID: "myOrg/mySourcecodeRepo#1", Source: Github}}},
 			{Test: Test{ClassName: "com.myCompany.myApp.myJavaTest", FileURL: "https://github.com/myOrg/mySourcecodeRepo/blob/master/src/test/java/com/myCompany/myApp/myJavaTest.java", Method: "myOtherMethod"},
 				BacklogItem: []BacklogItem{
-					BacklogItem{ID: "MYJIRAPROJECT-4", Source: Jira},
-					BacklogItem{ID: "MYJIRAPROJECT-5", Source: Jira},
-					BacklogItem{ID: "myOrg/mySourcecodeRepo#2", Source: Github}}}}}}
+					{ID: "MYJIRAPROJECT-4", Source: Jira},
+					{ID: "MYJIRAPROJECT-5", Source: Jira},
+					{ID: "myOrg/mySourcecodeRepo#2", Source: Github}}}}}}
 
 func TestJSONParsing(t *testing.T) {
 

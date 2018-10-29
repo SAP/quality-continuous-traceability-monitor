@@ -1,16 +1,15 @@
 package mapping
 
 import (
-	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"errors"
+	"github.com/SAP/quality-continuous-traceability-monitor/utils"
+	"github.com/golang/glog"
 	"os"
 	"regexp"
 	"strings"
-
-	"github.com/golang/glog"
 )
 
-// Used to search for our backlog item markers in sourcecode files (could be comma seperated list of multiple)
+// Used to search for our backlog item markers in sourcecode files (could be comma separated list of multiple)
 var reTraceMarker = regexp.MustCompile(`Trace\(((GitHub|Jira):([a-zA-Z0-9\-\/#\_])+\s*,*\s*)+\)`)
 
 // A const for backlog item sources

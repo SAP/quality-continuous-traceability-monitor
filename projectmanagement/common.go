@@ -1,10 +1,10 @@
 package projectmanagement
 
 import (
+	"fmt"
 	"github.com/SAP/quality-continuous-traceability-monitor/mapping"
 	"github.com/SAP/quality-continuous-traceability-monitor/testreport"
 	"github.com/SAP/quality-continuous-traceability-monitor/utils"
-	"fmt"
 	"io"
 	"os"
 	"strconv"

@@ -113,7 +113,7 @@ func createTraces(testSuite []testreport.TestSuite, backlogItems []mapping.TestB
 
 }
 
-// Get all traces which are relavent for the given delivery
+// Get all traces which are relevant for the given delivery
 func getDeliveryTraces(traces []projectmanagement.Trace, cfg utils.Config) []projectmanagement.Trace {
 
 	var deliveryTraces = []projectmanagement.Trace{}
@@ -247,7 +247,7 @@ func main() {
 		glog.Warning("++++ No issues traced to automated tests yet! Generated reports will be empty. (Just saying)")
 	}
 
-	// Get list of delivery relevent traces
+	// Get list of delivery relevant traces
 	var deliveryTraces = []projectmanagement.Trace{}
 	if cfg.Delivery.Backlogitems != "" {
 		deliveryTraces = getDeliveryTraces(traces, cfg)
