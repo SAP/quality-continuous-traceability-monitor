@@ -28,11 +28,7 @@ Your automated test results (e.g. provided by your test runner) must be availabl
 
 #### Stable release
 
-Download the latest released version (Linux or Windows) on our [release page](https://github.com/SAP/quality-continuous-traceability-monitor/releases).
-
-#### Development version
-
-If you want to use the latest development version, please ensure you have a working [latest version of go installed](https://golang.org/doc/install). Using the latest development version comes with no guarantee that CTM will work.
+Please ensure you have a working [latest version of go installed](https://golang.org/doc/install). 
 
 Get the latest version of CTM via `go get`
 ```
