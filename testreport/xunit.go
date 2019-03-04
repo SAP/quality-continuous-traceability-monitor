@@ -173,6 +173,9 @@ func addXUTestSuiteToTestResult(xmlFile string, ts []TestSuite, xuts XUTestsuite
 		if xutestcase.Failure == nil && xutestcase.Error == nil && xutestcase.Skipped == nil {
 			result = SUCCESS
 		}
+		if xutestcase.Skipped != nil {
+			result = SKIPPED
+		}
 		testcase := &TestCase{xmlFile, xutestcase.Classname, xutestcase.Name, result}
 		testcases = append(testcases, testcase)
 	}
