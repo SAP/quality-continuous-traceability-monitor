@@ -281,4 +281,6 @@ func main() {
 	}
 	utils.TimeTrack(reportingStartTime, "Create HTML and JSON reports")
 
+	glog.Info("Nuber of NOT successful tested requirements: ", len(traces)-projectmanagement.GetNumberOfSuccessfulTestedTraces(traces))
+
 }

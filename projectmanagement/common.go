@@ -89,7 +89,30 @@ func GetGHBranch(cfg utils.Config) string {
 
 }
 
-// CreateHTMLReport creates a HTML report file
+// GetNumberOfSuccessfulTestedTraces returns the number of successfully tested requirements
+func GetNumberOfSuccessfulTestedTraces(traces []Trace) int {
+
+	var successfulReq int
+	for _, trace := range traces {
+		if trace.TraceTests != nil { // Trace has tests
+			var allSuccessfull = true
+			for _, test := range trace.TraceTests {
+				if test.TestResult != testreport.SUCCESS {
+					allSuccessfull = false
+					break
+				}
+			}
+			if allSuccessfull {
+				successfulReq++
+			}
+		}
+	}
+
+	return successfulReq
+
+}
+
+// CreateHTMLReport creates a HTML report file (and returns the file reference)
 // filepath - the dirpath where to create the file
 // traces - list of all traces from the sourcecode
 // cfg - An ctm config struct
@@ -184,7 +207,7 @@ func CreateHTMLReport(filepath string, traces []Trace, cfg utils.Config, fullRep
 		table = table + "<td><a href=\"" + trace.BacklogItem.GetIssueURL(cfg) + "\" target=\"_blank\">%backlogItem%</a></td>"
 		var tests = "<td><div><ul class=\"nobullets\">"
 		var allSuccessful = true
-		if trace.TraceTests == nil {
+		if trace.TraceTests == nil { // We have traces, but no test results
 			allSuccessful = false
 			tests = tests + "<li class=\"notok\"><b>Missing</b>"
 		} else {
