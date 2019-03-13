@@ -158,6 +158,9 @@ func main() {
 	argDeliveryFile := flag.String("df", "", "Delivery file")
 	argVersion := flag.Bool("version", false, "CTM Version")
 
+	// Initialy set log level to INFO. (Once we've parsed the actual configuration, well set the desired loglevel)
+	flag.Set("stderrthreshold", "INFO")
+
 	// Get commandline arguments and read config
 	flag.Parse()
 

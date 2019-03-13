@@ -37,7 +37,7 @@ type Config struct {
 		AccessToken               string `json:"access_token,omitempty"`
 		BaseURL                   string `json:"base_url"`
 		CreateLinksInBacklogItems bool   `json:"createLinksInBacklogItems,omitempty"`
-	}
+	} `json:"github,omitempty"`
 	Jira struct {
 		BaseURL   string `json:"base_url,omitempty"`
 		BasicAuth struct {
@@ -137,10 +137,10 @@ func (cfg *Config) ReadConfig(configFilePath *string) {
 	}
 
 	// Check if github basedir (and access key) exist
-	if cfg.Github.BaseURL == "" {
-		glog.Fatal("No Github base URL given")
-	} else {
+	if cfg.Github.BaseURL != "" {
 		cfg.Github.BaseURL = strings.Trim(cfg.Github.BaseURL, "/")
+	} else {
+		glog.Warning("No GitHub configuration given! Links in generated reports may be broken. Do not use the trceability repository. Other strange things might occur.")
 	}
 
 	// Check traceability repo and its prerequisites
