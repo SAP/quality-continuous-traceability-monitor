@@ -254,6 +254,25 @@ func main() {
 	var deliveryTraces = []projectmanagement.Trace{}
 	if cfg.Delivery.Backlogitems != "" {
 		deliveryTraces = getDeliveryTraces(traces, cfg)
+
+		// Delivery traces might contain backlog items which are NOT in the all traces array,
+		// as new backlog items might not have tests yet, but the backlog item is already in the
+		// delivery json for monitoring
+		// In order to show missing tests for a backlog item also in the ALL report (as they already appear in
+		// the delivery specific report), we must had those misisng backlog items to the traces array
+		// See issue #9
+		for _, dtrace := range deliveryTraces {
+			var found = false
+			for _, trace := range traces {
+				if trace.BacklogItem == dtrace.BacklogItem {
+					found = true
+					continue
+				}
+			}
+			if !found {
+				traces = append(traces, dtrace)
+			}
+		}
 	}
 
 	// Update traceability repository (if given in config)
