@@ -9,7 +9,6 @@ jobs:
 
     environment:
       TEST_RESULTS: /tmp/test-results
-      GO111MODULE: on
 
     steps:
       - checkout       

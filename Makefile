@@ -2,6 +2,7 @@ GOFILES = $(shell find . -name '*.go' -not -path './vendor/*')
 GOPACKAGES = $(shell go list ./...  | grep -v /vendor/)
 WORKDIR = workdir
 VERSION = `git describe --always --long HEAD`
+GO111MODULE = on
 
 LDFLAGS = -ldflags "-w -s -X main.ctmVersion=${VERSION}"
 
