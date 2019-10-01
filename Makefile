@@ -1,5 +1,5 @@
-GOFILES = $(shell find . -name '*.go' -not -path './vendor/*')
-GOPACKAGES = $(shell go list ./...  | grep -v /vendor/)
+GOFILES = $(shell find . -name '*.go')
+GOPACKAGES = $(shell go list ./...)
 WORKDIR = workdir
 VERSION = `git describe --always --long HEAD`
 GO111MODULE = on
