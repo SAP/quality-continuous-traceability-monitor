@@ -106,41 +106,69 @@ func parseJava(coding io.Reader, cfg utils.Config, sc utils.Sourcecode, file *os
 			}
 		}
 
+		// Simple hack to identify the closing of an (outer) class
+		// Only works if the outerclass } is the first char in a line (will not work with "stange" coding formats)
+		// This should help us using inner classes, where cn would be set and need to be extended by innerclass name
+		classClose := strings.Index(line, "}")
+		if classClose == 0 && len(cn) > 0 {
+			cn = ""
+			continue
+		}
+
 		// Check whether this line contains the class name
 		// Reminder: cn will always hold the last found class name
 		// in case there a multiple classes in one file
 		ce := strings.LastIndex(line, "class ")
 		if ce != -1 {
 			// Ensure we're really having the class definition string not a line containing a class cast
-			// Check that the char before the word "class" is a blank
-			ls := line[ce-1 : ce]
-			ls = strings.TrimLeft(ls, " ")
-			if ls != "" {
-				continue
+			// Check that the char before the word "class" is a blank or the first line char
+			if ce != 0 {
+				ls := line[ce-1 : ce]
+				ls = strings.TrimLeft(ls, " ")
+				/*if ls != "" {
+					continue
+				}*/
 			}
-			cn = line[ce+5:]
-			// As cn could now still hold interface and parent class definitions we have
+			tcn := line[ce+5:]
+			// As t_cn could now still hold interface and parent class definitions we have
 			// to slice it a bit more
-			cn = strings.TrimLeft(cn, " ")
-			cne := strings.Index(cn, " ")
+			tcn = strings.TrimLeft(tcn, " ")
+			cne := strings.Index(tcn, " ")
 			if cne == -1 { // After the classname there was a space char. (could be omitted e.g. line end)
-				cne = strings.Index(cn, "\n")
+				cne = strings.Index(tcn, "\n")
 			}
 			if ce == -1 {
 				glog.Fatalln("Couldn't find classname in: ", line)
 				continue
 			}
-			cn = cn[:cne]
+			tcn = tcn[:cne]
 
 			// There could be a generic type at the end...trim this also
-			cng := strings.LastIndex(cn, "<")
+			cng := strings.LastIndex(tcn, "<")
 			if cng != -1 {
-				cn = cn[:cng]
+				tcn = tcn[:cng]
 			}
 
-			// Add package name to classname
-			if pn != "" {
-				cn = pn + "." + cn
+			// There could be a { right after the class name...trim this also
+			cncr := strings.LastIndex(tcn, "{")
+			if cncr != -1 {
+				tcn = tcn[:cncr]
+			}
+
+			if len(cn) > 0 { // Should be an inner class
+				// Maybe there is already an inner class in the class name. Cut it off, as a new inner classname will be attached
+				// Only works with one inner class. Inner classes of inner classes are not supported
+				// TODO: Make inner class detection more robust
+				cninner := strings.LastIndex(cn, "$")
+				if cninner != -1 {
+					cn = cn[:cninner]
+				}
+				cn = cn + "$" + tcn
+			} else { // Should be outer class
+				// Add package name to classname
+				if pn != "" {
+					cn = pn + "." + tcn
+				}
 			}
 
 			continue
