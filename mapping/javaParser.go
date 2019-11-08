@@ -168,6 +168,8 @@ func parseJava(coding io.Reader, cfg utils.Config, sc utils.Sourcecode, file *os
 				// Add package name to classname
 				if pn != "" {
 					cn = pn + "." + tcn
+				} else {
+					cn = tcn
 				}
 			}
 
