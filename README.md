@@ -51,7 +51,3 @@ In case of troubles with CTM, please [file an issue](https://github.com/SAP/qual
 ## Contributing
 Read and understand our [contribution guidelines](https://github.com/SAP/quality-continuous-traceability-monitor/blob/master/CONTRIBUTING.md) before opening a pull request.
 
-## Licensing
-
-Copyright (c) 2018,2019 SAP SE or an SAP affiliate company. All rights reserved. This software is licensed under the Apache Software License, v. 2 except as noted otherwise in the [LICENSE](./LICENSE) file.
-
