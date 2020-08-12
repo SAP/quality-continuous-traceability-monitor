@@ -229,7 +229,7 @@ func main() {
 			for _, s := range suites {
 				found := false
 				for _, cts := range testSuite {
-					if cts.Name == s.Name {
+					if (cts.Name == s.Name) && (len(cts.TestCase) == len(s.TestCase)) {
 						found = true
 						break
 					}
