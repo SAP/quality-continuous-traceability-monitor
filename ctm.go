@@ -229,7 +229,7 @@ func main() {
 			for _, s := range suites {
 				found := false
 				for _, cts := range testSuite {
-					if (cts.Name == s.Name) && (len(cts.TestCase) == len(s.TestCase)) {
+					if (cts.Name == s.Name) && (len(cts.TestCase) == len(s.TestCase)) && (s.TestCase[0].ReportFileName == cts.TestCase[0].ReportFileName) {
 						found = true
 						break
 					}
