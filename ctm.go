@@ -228,6 +228,10 @@ func main() {
 			// Ensure we don't collect doublicates
 			for _, s := range suites {
 				found := false
+				if s.TestCase == nil { // A Test suite with not Testcases. Seen that with Mocca framework
+					glog.Info("Empty Test Suite found")
+					continue
+				}
 				for _, cts := range testSuite {
 					if (cts.Name == s.Name) && (len(cts.TestCase) == len(s.TestCase)) && (s.TestCase[0].ReportFileName == cts.TestCase[0].ReportFileName) {
 						found = true
