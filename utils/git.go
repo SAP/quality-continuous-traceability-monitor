@@ -27,7 +27,7 @@ func CommitAndPush(repoPath string) {
 }
 
 // CloneRepo from remote
-func CloneRepo(repoURL, repoPath string) {
+func CloneRepo(cfg Config, repoURL, repoPath string) {
 
 	if _, err := os.Stat(repoPath); err == nil {
 		glog.Error("Unable to clone ", repoURL, " to ", repoPath, ". Directory already exists")
@@ -39,7 +39,9 @@ func CloneRepo(repoURL, repoPath string) {
 		}
 	}
 
-	err := CallGit("clone", repoURL, repoPath)
+	repoURLToken := addAccessTokenToURL(cfg, repoURL)
+
+	err := CallGit("clone", repoURLToken, repoPath)
 	if err != nil {
 		glog.Fatal("Unable to clone ", repoURL, " to ", repoPath)
 	}
@@ -60,7 +62,7 @@ func PullRepo(repoPath string) error {
 // If the given repo exists locally it will try to pull (no force!) the repo (in order to update it)
 // if it doesn't exist, it will clone the repo.
 // If resetOnFailedPull is set to true it will call a 'git reset --hard' if the preceding pull command failed
-func CloneOrPullRepo(repoURL, repoPath string, resetOnFailedPull bool) {
+func CloneOrPullRepo(cfg Config, repoURL, repoPath string, resetOnFailedPull bool) {
 
 	if Exists(repoPath) {
 		err := PullRepo(repoPath)
@@ -68,7 +70,7 @@ func CloneOrPullRepo(repoURL, repoPath string, resetOnFailedPull bool) {
 			CallGit("reset", "--hard")
 		}
 	} else {
-		CloneRepo(repoURL, repoPath)
+		CloneRepo(cfg, repoURL, repoPath)
 	}
 
 }
@@ -125,4 +127,14 @@ func IsGitInstalled() bool {
 	}
 
 	return true
+}
+
+func addAccessTokenToURL(cfg Config, repoURL string) string {
+
+	if cfg.Github.AccessToken != "" {
+		repoURL = strings.Replace(repoURL, "https://", "https://"+cfg.Github.AccessToken+"@", 1)
+	}
+
+	return repoURL
+
 }

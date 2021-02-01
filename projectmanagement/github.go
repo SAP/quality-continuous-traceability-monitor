@@ -72,7 +72,7 @@ func UpdateTraceabilityRepository(traces, deliveryTraces []Trace, client *GitHub
 	// Clone traceability repository
 	repoPath := client.config.WorkDir + string(os.PathSeparator) + client.config.TraceabilityRepo.Git.Repository
 
-	utils.CloneOrPullRepo(utils.GetRepositorySSHUrl(client.config, client.config.TraceabilityRepo.Git), repoPath, true)
+	utils.CloneOrPullRepo(client.config, utils.GetRepositorySSHUrl(client.config, client.config.TraceabilityRepo.Git), repoPath, true)
 
 	repoPath = repoPath + string(os.PathSeparator)
 

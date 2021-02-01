@@ -9,6 +9,8 @@ import (
 	"github.com/golang/glog"
 )
 
+const envKeyGithubAccesstoken = "GITHUB_TOKEN"
+
 // Git coordinates
 type Git struct {
 	Organization string
@@ -103,6 +105,10 @@ func (cfg *Config) ReadConfig(configFilePath *string) {
 		}
 	}
 
+	// Read configuration from environment (e.g. credentials and stuff)
+	// Needs to be done, before we start cloning repos etc.
+	cfg.readEnvironment()
+
 	// We only clone the src code repo if new don't have a mapping file (-> we need to parse the source code by ourself)
 	if cfg.Mapping.Local == "" {
 		for x, sc := range cfg.Sourcecode {
@@ -116,7 +122,7 @@ func (cfg *Config) ReadConfig(configFilePath *string) {
 							" as you don't have a git command line client installed.\n" +
 							" Please please check the local source code repository path and/or install the git command line client.")
 					}
-					CloneRepo(sourcecodeRepoURL, sc.Local)
+					CloneRepo(*cfg, sourcecodeRepoURL, sc.Local)
 				}
 			} else {
 				if sc.Git.Organization == "" {
@@ -130,7 +136,7 @@ func (cfg *Config) ReadConfig(configFilePath *string) {
 				repoName := GetRepositoryNameFromURL(sourcecodeRepoURL)
 				localPath := cfg.WorkDir + string(os.PathSeparator) + repoName
 				glog.Info("Cloning sourcecode repository ", sourcecodeRepoURL, " to ", localPath)
-				CloneOrPullRepo(sourcecodeRepoURL, localPath, true)
+				CloneOrPullRepo(*cfg, sourcecodeRepoURL, localPath, true)
 				cfg.Sourcecode[x].Local = localPath // Set config value
 			}
 		}
@@ -221,6 +227,15 @@ func (cfg *Config) ReadDelivery(deliveryFilePath *string) {
 		}
 	}
 	cfg.Delivery.Backlogitems = backlogItems
+
+}
+
+func (cfg *Config) readEnvironment() {
+
+	ghAccessToken := os.Getenv(envKeyGithubAccesstoken)
+	if ghAccessToken != "" {
+		cfg.Github.AccessToken = ghAccessToken
+	}
 
 }
 
