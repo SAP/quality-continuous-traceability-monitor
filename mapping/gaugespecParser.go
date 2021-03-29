@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"io"
 	"os"
-    "path/filepath"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -106,29 +106,29 @@ type GaugeSpecParser struct {
 }
 
 func (gsp GaugeSpecParser) Parse(cfg utils.Config, sc utils.Sourcecode) []TestBacklog {
-    testBacklog := &[]TestBacklog{}
+	testBacklog := &[]TestBacklog{}
 
-    filepath.Walk(sc.Local, func(path string, fi os.FileInfo, err error) error {
-        if fi.IsDir() || strings.Contains(path, "node_modules") || filepath.Ext(path) != ".spec" {
-            return nil
-        }
+	filepath.Walk(sc.Local, func(path string, fi os.FileInfo, err error) error {
+		if fi.IsDir() || strings.Contains(path, "node_modules") || filepath.Ext(path) != ".spec" {
+			return nil
+		}
 
-        *testBacklog = append(*testBacklog, gsp.ParseContent(nil, cfg, sc, nil)...)
+		*testBacklog = append(*testBacklog, gsp.ParseContent(nil, cfg, sc, nil)...)
 
-        file, err := os.Open(path)
-        if err != nil {
-            panic(err)
-        }
-        defer file.Close()
+		file, err := os.Open(path)
+		if err != nil {
+			panic(err)
+		}
+		defer file.Close()
 
-        reader := bufio.NewReader(file)
+		reader := bufio.NewReader(file)
 
-        *testBacklog = append(*testBacklog, gsp.ParseContent(reader, cfg, sc, file)...)
+		*testBacklog = append(*testBacklog, gsp.ParseContent(reader, cfg, sc, file)...)
 
-        return nil
-    })
+		return nil
+	})
 
-    return *testBacklog
+	return *testBacklog
 }
 
 func (gsp GaugeSpecParser) ParseContent(spec io.Reader, cfg utils.Config, sc utils.Sourcecode, file *os.File) []TestBacklog {
