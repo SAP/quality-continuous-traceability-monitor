@@ -2,6 +2,7 @@ package mapping
 
 import (
 	"errors"
+	"fmt"
 	"github.com/SAP/quality-continuous-traceability-monitor/testreport"
 	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"github.com/golang/glog"
@@ -166,15 +167,26 @@ func GetBacklogItem(m string) []BacklogItem {
 }
 
 func getSourcecodeURL(cfg utils.Config, sc utils.Sourcecode, file *os.File) string {
-
-	// No Github information give -> we cannot create the sourcecode link
-	if sc.Git.Organization == "" {
+	// No Github information given -> we cannot create the sourcecode link
+	if cfg.Github.BaseURL == "" || sc.Git.Organization == "" || sc.Git.Repository == "" || sc.Git.Branch == "" {
 		return ""
 	}
 
-	ghURL := cfg.Github.BaseURL + "/" + sc.Git.Organization + "/" + sc.Git.Repository + "/blob/" + sc.Git.Branch
-	//return ghUrl + "/" + strings.Replace(file.Name(), cfg.Sourcecode.Local, ghUrl, 1)
-	// Works: Annotations + Mapping
-	return strings.Replace(file.Name(), sc.Local, ghURL, 1)
+	ghBaseURL := cfg.Github.BaseURL
 
+	if strings.HasSuffix(ghBaseURL, "/") {
+		ghBaseURL = ghBaseURL[0 : len(ghBaseURL)-1]
+	}
+
+	fileName := file.Name()
+
+	if strings.HasPrefix(fileName, sc.Local) {
+		fileName = fileName[len(sc.Local):len(fileName)]
+	}
+
+	if strings.HasPrefix(fileName, "/") {
+		fileName = fileName[1:len(fileName)]
+	}
+
+	return fmt.Sprintf("%s/%s/%s/blob/%s/%s", ghBaseURL, sc.Git.Organization, sc.Git.Repository, sc.Git.Branch, fileName)
 }

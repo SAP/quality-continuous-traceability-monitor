@@ -11,6 +11,7 @@ import (
 
 	"github.com/SAP/quality-continuous-traceability-monitor/testreport"
 	"github.com/SAP/quality-continuous-traceability-monitor/utils"
+	"github.com/golang/glog"
 )
 
 var (
@@ -109,11 +110,15 @@ func (gsp GaugeSpecParser) Parse(cfg utils.Config, sc utils.Sourcecode) []TestBa
 	testBacklog := &[]TestBacklog{}
 
 	filepath.Walk(sc.Local, func(path string, fi os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+
 		if fi.IsDir() || strings.Contains(path, "node_modules") || filepath.Ext(path) != ".spec" {
 			return nil
 		}
 
-		*testBacklog = append(*testBacklog, gsp.ParseContent(nil, cfg, sc, nil)...)
+		glog.Infof("Parsing %s\n", path)
 
 		file, err := os.Open(path)
 		if err != nil {
