@@ -131,21 +131,6 @@ func TestGaugeSpecParsing(t *testing.T) {
 	}
 }
 
-/*
-type TestCase struct {
-    ReportFileName, // Test report file (e.g. Surefire XML)
-    ClassName, // Test class
-    MethodName string // Test method
-    Result int // Test result
-}
-
-type Test struct {
-    FileURL   string
-    ClassName string
-    Method    string
-}
-*/
-
 func TestGaugeTestCaseMatcher(t *testing.T) {
 	type testSample struct {
 		Description    string
