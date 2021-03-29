@@ -2,6 +2,7 @@ package mapping
 
 import (
 	"errors"
+	"github.com/SAP/quality-continuous-traceability-monitor/testreport"
 	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"github.com/golang/glog"
 	"os"
@@ -17,6 +18,10 @@ const (
 	Github int = 0
 	Jira   int = 1
 )
+
+type TestCaseMatcher interface {
+	Matches(*TestBacklog, *testreport.TestCase) bool
+}
 
 // Parser interface for programming language dependend parsers. cfg is complete configuration. sc is sourcecode repo/local path of current run
 type Parser interface {
@@ -38,8 +43,17 @@ type BacklogItem struct {
 
 // TestBacklog maps an automated test to one or more backlogitems
 type TestBacklog struct {
-	Test        Test
-	BacklogItem []BacklogItem
+	Test            Test
+	BacklogItem     []BacklogItem
+	TestCaseMatcher TestCaseMatcher
+}
+
+func (tb *TestBacklog) Matches(tc *testreport.TestCase) bool {
+	if tb.TestCaseMatcher == nil {
+		return tc.ClassName == tb.Test.ClassName && (tc.MethodName == tb.Test.Method || tb.Test.Method == "")
+	}
+
+	return tb.TestCaseMatcher.Matches(tb, tc)
 }
 
 // GetGitHubOrganization returns the GitHub organization from a backlog item

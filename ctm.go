@@ -87,15 +87,11 @@ func createTraces(testSuite []testreport.TestSuite, backlogItems []mapping.TestB
 		// Check whether we find the corresponding test case
 		for _, ts := range testSuite { // Checking in each test suite...
 			for _, tc := range ts.TestCase { // ...to find the test case
-				if tc.ClassName == sourceCodeTest.Test.ClassName {
-					if tc.MethodName == sourceCodeTest.Test.Method || sourceCodeTest.Test.Method == "" {
-						tt = projectmanagement.TraceTest{SourceFile: sourceCodeTest.Test.FileURL, ReportFile: tc.ReportFileName, ClassName: tc.ClassName, MethodName: tc.MethodName, TestResult: tc.Result}
-						traces = addTraceTest(traces, &sourceCodeTest.BacklogItem, tt)
-					}
+				if sourceCodeTest.Matches(tc) {
+					tt = projectmanagement.TraceTest{SourceFile: sourceCodeTest.Test.FileURL, ReportFile: tc.ReportFileName, ClassName: tc.ClassName, MethodName: tc.MethodName, TestResult: tc.Result}
+					traces = addTraceTest(traces, &sourceCodeTest.BacklogItem, tt)
 				}
-
 			}
-
 		}
 
 	}
@@ -206,15 +202,23 @@ func main() {
 		// backlog items
 		var p mapping.Parser
 		for _, sc := range cfg.Sourcecode {
-			if sc.Language == "java" {
+			switch sc.Language {
+			case "java":
 				p = mapping.JavaParser{}
-			} else if sc.Language == "python" {
+				break
+			case "python":
 				p = mapping.PythonParser{}
-			} else if sc.Language == "javascript" {
+				break
+			case "javascript":
 				p = mapping.JSParser{}
-			} else {
-				glog.Fatal("Sourcecode language for parsing needs to be Python, Java, or Javascript")
+				break
+			case "gaugespec":
+				p = mapping.GaugeSpecParser{}
+				break
+			default:
+				glog.Fatal("Sourcecode language for parsing needs to be 'python', 'java', 'javascript' or 'gaugespec'")
 			}
+
 			biMapping = append(biMapping, p.Parse(cfg, sc)...)
 		}
 	}

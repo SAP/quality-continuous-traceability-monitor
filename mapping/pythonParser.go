@@ -141,11 +141,11 @@ func parsePython(coding io.Reader, cfg utils.Config, sc utils.Sourcecode, file *
 					t := &Test{getSourcecodeURL(cfg, sc, file), cn, methodName}
 					var tbi TestBacklog
 					if cBli != nil {
-						tbi = TestBacklog{*t, cBli}
+						tbi = TestBacklog{Test: *t, BacklogItem: cBli}
 						tb = append(tb, tbi)
 					}
 					if mBli != nil {
-						tbi = TestBacklog{*t, mBli}
+						tbi = TestBacklog{Test: *t, BacklogItem: mBli}
 						tb = append(tb, tbi)
 					}
 
