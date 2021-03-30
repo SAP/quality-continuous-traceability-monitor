@@ -19,7 +19,7 @@ import (
 const reportBaseName = "ctm_report"
 
 // To be replaced by Make (using LDFLAGS) setting the latest git commit ID
-var ctmVersion = "1.0.2"
+var ctmVersion = "1.0.6"
 
 // Supported test result formats
 // xunit-xml format = https://github.com/windyroad/JUnit-Schema/blob/master/JUnit.xsd
