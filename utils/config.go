@@ -31,7 +31,7 @@ type Sourcecode struct {
 	Local       string
 	Git         Git
 	Language    string
-	URLTemplate string
+	CustomURLTemplate string
 }
 
 // Config struct representation of your JSON config file

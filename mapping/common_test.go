@@ -100,7 +100,7 @@ func TestGetSourcecodeURL(t *testing.T) {
 		cfg := &utils.Config{}
 		cfg.Github.BaseURL = ts.GithubBaseUrl
 
-		sc := utils.Sourcecode{Git: ts.Git, Local: ts.Local, URLTemplate: ts.CustomURLTemplate}
+		sc := utils.Sourcecode{Git: ts.Git, Local: ts.Local, CustomURLTemplate: ts.CustomURLTemplate}
 		file := os.NewFile(0, ts.FilePath)
 
 		expected := ts.ExpectedResult

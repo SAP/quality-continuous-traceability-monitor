@@ -191,8 +191,8 @@ func getSourcecodeURL(cfg utils.Config, sc utils.Sourcecode, file *os.File) stri
 	templateParams := map[string]interface{}{"base": ghBaseURL, "git.org": sc.Git.Organization, "git.repository": sc.Git.Repository, "git.branch": sc.Git.Branch, "fileName": fileName}
 	template := "%{base}/%{git.org}/%{git.repository}/blob/%{git.branch}/%{fileName}"
 
-	if sc.URLTemplate != "" {
-		template = sc.URLTemplate
+	if sc.CustomURLTemplate != "" {
+		template = sc.CustomURLTemplate
 	}
 
 	return tPrintf(template, templateParams)
