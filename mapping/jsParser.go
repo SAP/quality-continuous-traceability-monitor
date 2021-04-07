@@ -88,7 +88,7 @@ func (jp JSParser) Parse(cfg utils.Config, sc utils.Sourcecode) []TestBacklog {
 						if bli != nil && len(mn) == 0 {
 							// Create and append test backlog item (for complete class)
 							t := &Test{getSourcecodeURL(cfg, sc, file), cn, ""}
-							tbi := TestBacklog{*t, bli}
+							tbi := TestBacklog{Test: *t, BacklogItem: bli}
 							tb = append(tb, tbi)
 
 							// Point backlog item to nil to ensure we're not processing this class any further
@@ -114,7 +114,7 @@ func (jp JSParser) Parse(cfg utils.Config, sc utils.Sourcecode) []TestBacklog {
 
 							// Create and append test backlog item (for this method)
 							t := &Test{getSourcecodeURL(cfg, sc, file), cn, methodName}
-							tbi := TestBacklog{*t, bli}
+							tbi := TestBacklog{Test: *t, BacklogItem: bli}
 							tb = append(tb, tbi)
 
 							mn = append(mn, methodName)

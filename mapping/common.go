@@ -2,6 +2,8 @@ package mapping
 
 import (
 	"errors"
+	"fmt"
+	"github.com/SAP/quality-continuous-traceability-monitor/testreport"
 	"github.com/SAP/quality-continuous-traceability-monitor/utils"
 	"github.com/golang/glog"
 	"os"
@@ -17,6 +19,10 @@ const (
 	Github int = 0
 	Jira   int = 1
 )
+
+type TestCaseMatcher interface {
+	Matches(*TestBacklog, *testreport.TestCase) bool
+}
 
 // Parser interface for programming language dependend parsers. cfg is complete configuration. sc is sourcecode repo/local path of current run
 type Parser interface {
@@ -38,8 +44,17 @@ type BacklogItem struct {
 
 // TestBacklog maps an automated test to one or more backlogitems
 type TestBacklog struct {
-	Test        Test
-	BacklogItem []BacklogItem
+	Test            Test
+	BacklogItem     []BacklogItem
+	TestCaseMatcher TestCaseMatcher
+}
+
+func (tb *TestBacklog) Matches(tc *testreport.TestCase) bool {
+	if tb.TestCaseMatcher == nil {
+		return tc.ClassName == tb.Test.ClassName && (tc.MethodName == tb.Test.Method || tb.Test.Method == "")
+	}
+
+	return tb.TestCaseMatcher.Matches(tb, tc)
 }
 
 // GetGitHubOrganization returns the GitHub organization from a backlog item
@@ -152,15 +167,41 @@ func GetBacklogItem(m string) []BacklogItem {
 }
 
 func getSourcecodeURL(cfg utils.Config, sc utils.Sourcecode, file *os.File) string {
-
-	// No Github information give -> we cannot create the sourcecode link
-	if sc.Git.Organization == "" {
+	// No Github information given -> we cannot create the sourcecode link
+	if cfg.Github.BaseURL == "" || sc.Git.Organization == "" || sc.Git.Repository == "" || sc.Git.Branch == "" {
 		return ""
 	}
 
-	ghURL := cfg.Github.BaseURL + "/" + sc.Git.Organization + "/" + sc.Git.Repository + "/blob/" + sc.Git.Branch
-	//return ghUrl + "/" + strings.Replace(file.Name(), cfg.Sourcecode.Local, ghUrl, 1)
-	// Works: Annotations + Mapping
-	return strings.Replace(file.Name(), sc.Local, ghURL, 1)
+	ghBaseURL := cfg.Github.BaseURL
 
+	if strings.HasSuffix(ghBaseURL, "/") {
+		ghBaseURL = ghBaseURL[0 : len(ghBaseURL)-1]
+	}
+
+	fileName := file.Name()
+
+	if strings.HasPrefix(fileName, sc.Local) {
+		fileName = fileName[len(sc.Local):len(fileName)]
+	}
+
+	if strings.HasPrefix(fileName, "/") {
+		fileName = fileName[1:len(fileName)]
+	}
+
+	templateParams := map[string]interface{}{"base": ghBaseURL, "git.org": sc.Git.Organization, "git.repository": sc.Git.Repository, "git.branch": sc.Git.Branch, "fileName": fileName}
+	template := "%{base}/%{git.org}/%{git.repository}/blob/%{git.branch}/%{fileName}"
+
+	if sc.CustomURLTemplate != "" {
+		template = sc.CustomURLTemplate
+	}
+
+	return tPrintf(template, templateParams)
+}
+
+func tPrintf(template string, params map[string]interface{}) string {
+	for key, val := range params {
+		template = strings.ReplaceAll(template, "%{"+key+"}", fmt.Sprintf("%s", val))
+	}
+
+	return template
 }
