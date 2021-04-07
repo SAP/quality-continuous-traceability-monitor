@@ -28,9 +28,10 @@ type delivery struct {
 
 // Sourcecode location (local and/or remote) and coding language
 type Sourcecode struct {
-	Local    string
-	Git      Git
-	Language string
+	Local       string
+	Git         Git
+	Language    string
+	URLTemplate string
 }
 
 // Config struct representation of your JSON config file

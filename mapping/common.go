@@ -188,5 +188,20 @@ func getSourcecodeURL(cfg utils.Config, sc utils.Sourcecode, file *os.File) stri
 		fileName = fileName[1:len(fileName)]
 	}
 
-	return fmt.Sprintf("%s/%s/%s/blob/%s/%s", ghBaseURL, sc.Git.Organization, sc.Git.Repository, sc.Git.Branch, fileName)
+	templateParams := map[string]interface{}{"base": ghBaseURL, "git.org": sc.Git.Organization, "git.repository": sc.Git.Repository, "git.branch": sc.Git.Branch, "fileName": fileName}
+	template := "%{base}/%{git.org}/%{git.repository}/blob/%{git.branch}/%{fileName}"
+
+	if sc.URLTemplate != "" {
+		template = sc.URLTemplate
+	}
+
+	return tPrintf(template, templateParams)
+}
+
+func tPrintf(template string, params map[string]interface{}) string {
+	for key, val := range params {
+		template = strings.ReplaceAll(template, "%{"+key+"}", fmt.Sprintf("%s", val))
+	}
+
+	return template
 }

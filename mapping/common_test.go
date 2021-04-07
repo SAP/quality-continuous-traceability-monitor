@@ -9,12 +9,13 @@ import (
 
 func TestGetSourcecodeURL(t *testing.T) {
 	type testSample struct {
-		Description    string
-		GithubBaseUrl  string
-		Git            utils.Git
-		Local          string
-		FilePath       string
-		ExpectedResult string
+		Description       string
+		GithubBaseUrl     string
+		Git               utils.Git
+		Local             string
+		FilePath          string
+		ExpectedResult    string
+		CustomURLTemplate string
 	}
 
 	testSamples := []testSample{
@@ -81,13 +82,25 @@ func TestGetSourcecodeURL(t *testing.T) {
 			FilePath:       "subdir/testFile.spec",
 			ExpectedResult: "https://github.mycompany.local/myorg/myrepo/blob/master/subdir/testFile.spec",
 		},
+		testSample{
+			Description:   "Use a custom URL template",
+			GithubBaseUrl: "https://github.mycompany.local",
+			Git: utils.Git{
+				Organization: "myorg",
+				Repository:   "myrepo",
+				Branch:       "master",
+			},
+			FilePath:          "subdir/testFile.spec",
+			CustomURLTemplate: "https://support.any.other.location.local/%{git.repository}/%{git.org}/%{git.branch}/%{fileName}",
+			ExpectedResult:    "https://support.any.other.location.local/myrepo/myorg/master/subdir/testFile.spec",
+		},
 	}
 
 	for i, ts := range testSamples {
 		cfg := &utils.Config{}
 		cfg.Github.BaseURL = ts.GithubBaseUrl
 
-		sc := utils.Sourcecode{Git: ts.Git, Local: ts.Local}
+		sc := utils.Sourcecode{Git: ts.Git, Local: ts.Local, URLTemplate: ts.CustomURLTemplate}
 		file := os.NewFile(0, ts.FilePath)
 
 		expected := ts.ExpectedResult
