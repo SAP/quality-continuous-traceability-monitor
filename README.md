@@ -44,7 +44,7 @@ See our [Getting Started Guide](https://github.com/SAP/quality-continuous-tracea
 
 Check our [CTM Guidebook](https://github.com/SAP/quality-continuous-traceability-monitor/wiki/CTM-Guidebook) to learn about the various options you could use CTM to improve your code quality.
 
-## How to obtain help
+## How to obtain support
 
 In case of troubles with CTM, please [file an issue](https://github.com/SAP/quality-continuous-traceability-monitor/issues) and we'll try to help you. 
 
