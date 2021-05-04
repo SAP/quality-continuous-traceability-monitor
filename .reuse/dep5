@@ -1,0 +1,7 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Continuous Traceability Monitor (CTM)
+Source: https://github.com/SAP/quality-continuous-traceability-monitor
+
+Files: *
+Copyright: 2018-2021 SAP SE or an SAP affiliate company and Continuous Traceability Monitor (CTM) contributors
+License: Apache-2.0
