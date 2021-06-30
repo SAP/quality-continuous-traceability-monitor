@@ -1,6 +1,7 @@
 package projectmanagement
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/SAP/quality-continuous-traceability-monitor/mapping"
 	"github.com/SAP/quality-continuous-traceability-monitor/testreport"
@@ -337,4 +338,56 @@ func CreateJSONReport(filepath string, traces []Trace, cfg utils.Config) *os.Fil
 
 	return f
 
+}
+
+//	CreateRequirementsMappingReport Creates a requirement mapping file which can be used for processing in a differentinstance of CTM or other tools to process traceability information
+// filepath - the dirpath where to create the file
+// traces - list of all traces from the sourcecode
+// cfg - An ctm config struct
+func CreateRequirementsMappingReport(filepath string, traces []Trace, cfg utils.Config) *os.File {
+	f, err := os.Create(filepath)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	var mappings []Mapping
+	for _, trace := range traces {
+		githubKeys, jiraKeys := extractKeys(trace)
+		for _, test := range trace.TraceTests {
+
+			mappings = append(mappings, Mapping{
+				SourceReference: test.ClassName + "." + test.MethodName + "()",
+				JiraKeys:        jiraKeys,
+				GithubKeys:      githubKeys,
+			})
+		}
+	}
+
+	content, _ := json.MarshalIndent(mappings, "", " ")
+
+	_, _ = f.Write(content)
+
+	_ = f.Sync()
+	return f
+}
+
+// extractKeys returns an array for each project management system containing backlog items
+func extractKeys(trace Trace) ([]string, []string) {
+	var githubKeys []string = nil
+	var jiraKeys []string = nil
+
+	switch trace.BacklogItem.Source {
+	case mapping.Jira:
+		jiraKeys = []string{trace.BacklogItem.ID}
+	case mapping.Github:
+		githubKeys = []string{trace.BacklogItem.ID}
+	}
+	return githubKeys, jiraKeys
+}
+
+type Mapping struct {
+	SourceReference string `json:"source_reference"`
+	JiraKeys   []string `json:"jira_keys,omitempty"`
+	GithubKeys []string `json:"github_keys,omitempty"`
 }
