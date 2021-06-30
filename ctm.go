@@ -150,9 +150,10 @@ func main() {
 	argConfigFile := flag.String("c", "./myConfig.json", "Configuration file for CTM")
 	argCommandLineVersion := flag.String("sd", "", "Delivery version")
 	argCommandLineProgram := flag.String("sp", "", "Delivery program")
-	argSelectiveBacklogItems := flag.String("bi", "", "Comma separated list of delivery relevtn backlog items")
+	argSelectiveBacklogItems := flag.String("bi", "", "Comma separated list of delivery relevant backlog items")
 	argDeliveryFile := flag.String("df", "", "Delivery file")
 	argVersion := flag.Bool("version", false, "CTM Version")
+	argExportRequirementsMapping := flag.Bool("erm", false, "Export an requirements mapping file")
 
 	// Initialy set log level to INFO. (Once we've parsed the actual configuration, well set the desired loglevel)
 	flag.Set("stderrthreshold", "INFO")
@@ -303,11 +304,17 @@ func main() {
 	// Create HTML and JSON containing ALL traces
 	projectmanagement.CreateHTMLReport(cfg.OutputDir+string(os.PathSeparator)+reportBaseName+"_all.html", traces, cfg, true)
 	projectmanagement.CreateJSONReport(cfg.OutputDir+string(os.PathSeparator)+reportBaseName+"_all.json", traces, cfg)
+	if *argExportRequirementsMapping {
+		projectmanagement.CreateRequirementsMappingReport(cfg.OutputDir+string(os.PathSeparator)+reportBaseName+"traceability-mapping.json", traces, cfg)
+	}
 
 	// Create HTML and JSON containing DELIVERY relevant traces
 	if cfg.Delivery.Backlogitems != "" {
 		projectmanagement.CreateHTMLReport(cfg.OutputDir+string(os.PathSeparator)+reportBaseName+"_"+cfg.Delivery.Version+".html", deliveryTraces, cfg, false)
 		projectmanagement.CreateJSONReport(cfg.OutputDir+string(os.PathSeparator)+reportBaseName+"_"+cfg.Delivery.Version+".json", deliveryTraces, cfg)
+		if *argExportRequirementsMapping {
+			projectmanagement.CreateRequirementsMappingReport(cfg.OutputDir+string(os.PathSeparator)+reportBaseName+"_"+cfg.Delivery.Version+"-traceability-mapping.json", deliveryTraces, cfg)
+		}
 	}
 	utils.TimeTrack(reportingStartTime, "Create HTML and JSON reports")
 
