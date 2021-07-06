@@ -3,6 +3,7 @@ module github.com/SAP/quality-continuous-traceability-monitor
 go 1.12
 
 require (
+	github.com/go-test/deep v1.0.7
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-github v17.0.0+incompatible
