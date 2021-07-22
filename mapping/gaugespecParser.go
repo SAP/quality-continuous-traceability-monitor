@@ -178,7 +178,7 @@ func (gsp GaugeSpecParser) parseHeader(line string) (string, int) {
 			level = len(matches[i])
 			break
 		case "title":
-			title = matches[i]
+			title = strings.TrimSpace(matches[i])
 			break
 		}
 	}

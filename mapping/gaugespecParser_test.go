@@ -42,6 +42,24 @@ Trace: Jira:MYPROJECT-13
 	},
 	{
 		input: `
+# Just a spec, single requirement with whitespace on the right 
+Trace: Jira:MYPROJECT-13
+        `,
+		expectedResult: []TestBacklog{
+			{
+				Test: Test{
+					ClassName: "Just a spec, single requirement with whitespace on the right",
+					FileURL:   "testFile.spec",
+					Method:    "",
+				},
+				BacklogItem: []BacklogItem{
+					{ID: "MYPROJECT-13", Source: Jira},
+				},
+			},
+		},
+	},
+	{
+		input: `
 # Just a spec, multiple requirements
 Trace: Jira:MYPROJECT-13, GitHub:myorg/myRepo#1
         `,

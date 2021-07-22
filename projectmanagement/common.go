@@ -351,18 +351,7 @@ func CreateRequirementsMappingReport(filepath string, traces []Trace, cfg utils.
 	}
 	defer f.Close()
 
-	var mappings []Mapping
-	for _, trace := range traces {
-		githubKeys, jiraKeys := extractKeys(trace)
-		for _, test := range trace.TraceTests {
-
-			mappings = append(mappings, Mapping{
-				SourceReference: test.ClassName + "." + test.MethodName + "()",
-				JiraKeys:        jiraKeys,
-				GithubKeys:      githubKeys,
-			})
-		}
-	}
+	mappings := CreateRequirementsMapping(traces)
 
 	content, _ := json.MarshalIndent(mappings, "", " ")
 
@@ -372,10 +361,53 @@ func CreateRequirementsMappingReport(filepath string, traces []Trace, cfg utils.
 	return f
 }
 
+func CreateRequirementsMapping(traces []Trace) []Mapping {
+	var mappings []Mapping
+	for _, trace := range traces {
+		githubKeys, jiraKeys := extractKeys(trace)
+		for _, test := range trace.TraceTests {
+
+			reference := createSourceReference(test)
+			var found = false
+			for i, existingMapping := range mappings {
+				if existingMapping.SourceReference == reference {
+
+					existingMapping.addJiraKeys(jiraKeys)
+					existingMapping.addGithubKeys(githubKeys)
+					mappings[i] = existingMapping
+					found = true
+				}
+			}
+
+			if !found {
+				var newMapping = Mapping{
+					SourceReference: reference,
+					JiraKeys:        jiraKeys,
+					GithubKeys:      githubKeys,
+				}
+				mappings = append(mappings, newMapping)
+			}
+		}
+	}
+	return mappings
+}
+
+func createSourceReference(test TraceTest) string {
+	return test.ClassName + "." + test.MethodName + "()"
+}
+
+func (mapping *Mapping) addJiraKeys(keys []string) []string {
+	mapping.JiraKeys = append(mapping.JiraKeys, keys...)
+	return mapping.JiraKeys
+}
+func (mapping *Mapping) addGithubKeys(keys []string) []string {
+	mapping.GithubKeys = append(mapping.GithubKeys, keys...)
+	return mapping.GithubKeys
+}
 // extractKeys returns an array for each project management system containing backlog items
 func extractKeys(trace Trace) ([]string, []string) {
-	var githubKeys []string = nil
-	var jiraKeys []string = nil
+	var githubKeys = make([]string, 0)
+	var jiraKeys = make([]string, 0)
 
 	switch trace.BacklogItem.Source {
 	case mapping.Jira:

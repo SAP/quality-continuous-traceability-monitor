@@ -305,7 +305,7 @@ func main() {
 	projectmanagement.CreateHTMLReport(cfg.OutputDir+string(os.PathSeparator)+reportBaseName+"_all.html", traces, cfg, true)
 	projectmanagement.CreateJSONReport(cfg.OutputDir+string(os.PathSeparator)+reportBaseName+"_all.json", traces, cfg)
 	if *argExportRequirementsMapping {
-		projectmanagement.CreateRequirementsMappingReport(cfg.OutputDir+string(os.PathSeparator)+reportBaseName+"traceability-mapping.json", traces, cfg)
+		projectmanagement.CreateRequirementsMappingReport(cfg.OutputDir+string(os.PathSeparator)+"requirement-mapping.json", traces, cfg)
 	}
 
 	// Create HTML and JSON containing DELIVERY relevant traces
@@ -313,7 +313,7 @@ func main() {
 		projectmanagement.CreateHTMLReport(cfg.OutputDir+string(os.PathSeparator)+reportBaseName+"_"+cfg.Delivery.Version+".html", deliveryTraces, cfg, false)
 		projectmanagement.CreateJSONReport(cfg.OutputDir+string(os.PathSeparator)+reportBaseName+"_"+cfg.Delivery.Version+".json", deliveryTraces, cfg)
 		if *argExportRequirementsMapping {
-			projectmanagement.CreateRequirementsMappingReport(cfg.OutputDir+string(os.PathSeparator)+reportBaseName+"_"+cfg.Delivery.Version+"-traceability-mapping.json", deliveryTraces, cfg)
+			projectmanagement.CreateRequirementsMappingReport(cfg.OutputDir+string(os.PathSeparator)+cfg.Delivery.Version+"_requirement-mapping.json", deliveryTraces, cfg)
 		}
 	}
 	utils.TimeTrack(reportingStartTime, "Create HTML and JSON reports")
