@@ -51,5 +51,8 @@ In case of troubles with CTM, please [file an issue](https://github.com/SAP/qual
 ## Contributing
 Read and understand our [contribution guidelines](https://github.com/SAP/quality-continuous-traceability-monitor/blob/master/CONTRIBUTING.md) before opening a pull request.
 
+## Code of Conduct
+Please read and follow our [Code of Conduct](https://github.com/SAP/quality-continuous-traceability-monitor/blob/master/CODE_OF_CONDUCT.md).
+
 ## Licensing
 Please see our [LICENSE](https://github.com/SAP/quality-continuous-traceability-monitor/blob/master/LICENSE) for copyright and license information. Detailed information including third-party components and their licensing/copyright information is available via the [REUSE tool](https://api.reuse.software/info/github.com/SAP/quality-continuous-traceability-monitor).
