@@ -19,7 +19,7 @@ jobs:
             - v1-pkg-cache
 
       # Get JUnit XML formater
-      - run: go install github.com/jstemmer/go-junit-report
+      - run: go install github.com/jstemmer/go-junit-report@latest
 
       - run:
           name: Run unit tests
