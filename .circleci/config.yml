@@ -20,14 +20,14 @@ jobs:
 
       # Get JUnit XML formater
       - run: go install github.com/jstemmer/go-junit-report@latest
-
+      - run: make build-linux
       - run:
           name: Run unit tests
           command: |
             trap "go-junit-report <${TEST_RESULTS}/go-test.out > ${TEST_RESULTS}/go-test-report.xml" EXIT
             make test | tee ${TEST_RESULTS}/go-test.out
 
-      - run: make build-linux
+     # - run: make build-linux
       - run: make build-windows
 
       - save_cache:
