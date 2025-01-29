@@ -5,7 +5,7 @@ jobs:
       # CircleCI Go images available at: https://hub.docker.com/r/circleci/golang/
       - image: cimg/go:1.22.11
         
-    working_directory: $HOME/go/src/github.com/SAP/quality-continuous-traceability-monitor
+    working_directory: /home/circleci/go/src/github.com/SAP/quality-continuous-traceability-monitor
 
     environment:
       TEST_RESULTS: /tmp/test-results
@@ -20,14 +20,14 @@ jobs:
 
       # Get JUnit XML formater
       - run: go install github.com/jstemmer/go-junit-report@latest
-      - run: make build-linux
+
       - run:
           name: Run unit tests
           command: |
             trap "go-junit-report <${TEST_RESULTS}/go-test.out > ${TEST_RESULTS}/go-test-report.xml" EXIT
             make test | tee ${TEST_RESULTS}/go-test.out
 
-     # - run: make build-linux
+      - run: make build-linux
       - run: make build-windows
 
       - save_cache:
