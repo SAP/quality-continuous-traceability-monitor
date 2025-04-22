@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       # CircleCI Go images available at: https://hub.docker.com/r/circleci/golang/
-      - image: cimg/go:1.22.11
+      - image: cimg/go:1.23.8
         
     working_directory: /home/circleci/go/src/github.com/SAP/quality-continuous-traceability-monitor
 
@@ -13,6 +13,9 @@ jobs:
     steps:
       - checkout       
       - run: mkdir -p $TEST_RESULTS
+
+      # Clean up go mods
+      - run: go mod tidy
 
       - restore_cache:
           keys:
