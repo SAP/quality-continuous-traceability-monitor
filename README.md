@@ -3,7 +3,7 @@
 [![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![REUSE status](https://api.reuse.software/badge/github.com/SAP/quality-continuous-traceability-monitor)](https://api.reuse.software/info/github.com/SAP/quality-continuous-traceability-monitor) [![CircleCI](https://circleci.com/gh/SAP/quality-continuous-traceability-monitor/tree/master.svg?style=svg)](https://circleci.com/gh/SAP/quality-continuous-traceability-monitor/tree/master) [![Go Report Card](https://goreportcard.com/badge/github.com/SAP/quality-continuous-traceability-monitor)](https://goreportcard.com/report/github.com/SAP/quality-continuous-traceability-monitor)
 
 #### Why?
-CTM allows you to continuously monitor the health of your product's requirements.
+CTM allows you to continuous4ly monitor the health of your product's requirements.
 Test results often miss a link to the project's requirements so that it's cumbersome to understand which requirement is affected by a broken test.  
 Adding CTM to e.g. your Continuous Delivery pipeline will give the complete team an always up to date view on the quality status of your project's requirements!  
 Read also our blog: [Don’t monitor the health of your test cases, monitor the health of your product requirements!](https://blogs.sap.com/2019/03/07/dont-monitor-the-health-of-your-test-cases-monitor-the-health-of-your-product-requirements/) on the rational of CTM
