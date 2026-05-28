@@ -114,7 +114,7 @@ func (gsp GaugeSpecParser) Parse(cfg utils.Config, sc utils.Sourcecode) []TestBa
 			return err
 		}
 
-		if fi.IsDir() || strings.Contains(path, "node_modules") || filepath.Ext(path) != ".spec" {
+		if fi.IsDir() || strings.Contains(path, "node_modules") || filepath.Ext(path) != ".spec" || filepath.Ext(path) != ".md" {
 			return nil
 		}
 
